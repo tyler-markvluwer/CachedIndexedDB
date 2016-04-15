@@ -1,0 +1,22 @@
+<div class="container">
+    <h1>Users</h1>
+    <button type="button" class="btn btn-default" aria-label="Left Align" [routerLink]="['AddUser', {edit: false}]">
+        <span class="fa fa-plus" aria-hidden="true"></span>
+        Add User
+    </button>
+    <table class="table table-bordered">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <tr *ngFor="#user of users">
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td><span [routerLink]="['AddUser', {edit: true, id: user.id}]" class="fa fa-pencil-square-o"></span></td>
+            <td><span class="fa fa-trash"></span></td>
+        </tr>
+    </table>
+    <spinner [visible]="isLoading"></spinner>
+</div>

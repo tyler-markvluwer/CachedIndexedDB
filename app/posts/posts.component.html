@@ -1,0 +1,77 @@
+<div class="container-fluid">
+    <h1>Posts</h1>
+    <div class="row col-sm-5">
+        <!-- Dropdown -->
+        <div class="dropdown">
+            <button *ngIf="!selectedUser" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Select a user
+                <span class="caret"></span>
+            </button>
+            <button *ngIf="selectedUser" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                {{ selectedUser.name }}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li>
+                    <a
+                        (click)="getPosts()"
+                    >
+                        Select a user
+                    </a>
+                    <a
+                        *ngFor="#user of users"
+                        (click)="filterPostsByUser(user)"
+                    >
+                        {{user.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- Pagination -->
+        <pagination *ngIf="posts.length > postsPerPage" (change)="onPageChange($event)"></pagination>
+        <!-- Posts -->
+        <ul *ngIf="!postIsLoading" class="list-group">
+            <li
+                *ngFor="#post of visiblePosts"
+                class="list-group-item post-item"
+                (click)="setSelectedPost(post)"
+                [class.highlighted]="post.id==selectedPost?.id"
+            >
+                {{post.body}}
+            </li>
+        </ul>
+        <spinner [visible]="postIsLoading"></spinner>
+    </div>
+    <!-- Spacing Divider between halves -->
+    <div class="row col-sm-1"></div>
+    <!-- Full Post view / comment -->
+    <div *ngIf="selectedPost" class="row col-sm-6">
+        <!-- Post View -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ selectedPost?.title }}</h3>
+            </div>
+            <div class="panel-body">
+                {{ selectedPost?.body }}
+            </div>
+            <div class="divider"></div>
+            <!-- Comment -->
+            <spinner [visible]="commentsAreLoading"></spinner>
+            <div *ngIf="!commentsAreLoading">
+                <div *ngFor="#comment of comments"  class="panel-body">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                            <img class="media-object round" src="http://lorempixel.com/80/80/people?random={{comment.id}}" alt="...">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{ comment.name }}</h4>
+                            {{ comment.body }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

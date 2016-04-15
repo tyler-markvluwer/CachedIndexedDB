@@ -1,0 +1,30 @@
+<nav>
+  <ul class="pagination">
+    <li>
+      <a 
+        aria-label="Previous"
+        (click)="prevClick()"
+        [class.disabled]="activePage==1"
+      >
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li *ngFor="#pageNum of pages">
+        <a
+            (click)="jumpToPage(pageNum)"
+            [class.highlighted]="pageNum==activePage"
+        >
+            {{ pageNum }}
+        </a>
+    </li>
+    <li>
+      <a
+        aria-label="Next"
+        (click)="nextClick()"
+        [class.disabled]="activePage==numPages"
+      >
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
